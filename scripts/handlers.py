@@ -27,9 +27,8 @@ def handle_fund_code():
         try:
             Fund.objects.create(code=fund[0],
                                 brief=fund[1],
-                                cn_name=fund[2],
-                                type=fund[3],
-                                pinyin=fund[4])
+                                name=fund[2],
+                                type=fund[3])
         except Exception as e:
             print(e, fund)
 
