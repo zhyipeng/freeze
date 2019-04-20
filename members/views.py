@@ -1,8 +1,45 @@
-from django.shortcuts import render
-from django.views import View
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from rest_framework.exceptions import ValidationError
+
+from core.mixins import LoginRequiredMixin
+from core.views import BasePageView
+from members.forms import LoginForm, RegisterForm
 
 
-class MineView(View):
+class MineView(LoginRequiredMixin, BasePageView):
+    template = 'members/mine.html'
 
-    def get(self, request):
-        return render(request, 'members/mine.html')
+
+class LoginView(BasePageView):
+    template = 'members/login.html'
+
+    def post(self, request):
+        form = LoginForm(data=request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            if user:
+                request.session['user'] = user.id
+                return redirect(reverse('funds:index'))
+
+        return render(
+            request, self.template, {'err_msg': '用户名或密码错误!'})
+
+
+class RegisterView(BasePageView):
+    template = 'members/register.html'
+
+    def post(self, request):
+        form = RegisterForm(data=request.POST)
+
+        try:
+            form.is_valid(raise_exception=True)
+            user = form.save()
+            if user:
+                request.session['user'] = user.id
+
+            return redirect(reverse('funds:index'))
+        except ValidationError as e:
+            return render(
+                request, self.template, {'err_msg': e.get_full_details()})

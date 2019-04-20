@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'funds',
     'members',
     'django_extensions',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

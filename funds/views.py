@@ -1,8 +1,12 @@
-from django.shortcuts import render
-from django.views import View
+from core.mixins import LoginRequiredMixin, GenericFormPostMixin
+from core.views import BasePageView
+from funds.forms import AddConcernedFundForm
 
 
-class FundView(View):
+class FundView(LoginRequiredMixin, BasePageView):
+    template = 'funds/index.html'
 
-    def get(self, request):
-        return render(request, 'funds/index.html')
+
+class AddConcernedFundView(LoginRequiredMixin, GenericFormPostMixin, BasePageView):
+    template = 'funds/add_fund.html'
+    form = AddConcernedFundForm
