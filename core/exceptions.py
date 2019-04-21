@@ -19,3 +19,12 @@ class BusinessException(Exception):
 
     def __unicode__(self):
         return self.err_msg
+
+
+def handle_validation_error_msg(detail):
+    for key, msg_list in detail.items():
+        if msg_list[0]['code'] == 'invalid':
+            return msg_list[0]['message']
+
+        else:
+            return f'{key}: {msg_list[0]["message"]}'

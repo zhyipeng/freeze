@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from rest_framework.exceptions import ValidationError
 
+from core.exceptions import handle_validation_error_msg
 from core.mixins import LoginRequiredMixin
 from core.views import BasePageView
 from members.forms import LoginForm, RegisterForm
@@ -41,5 +42,5 @@ class RegisterView(BasePageView):
 
             return redirect(reverse('funds:index'))
         except ValidationError as e:
-            return render(
-                request, self.template, {'err_msg': e.get_full_details()})
+            err_msg = handle_validation_error_msg(e.get_full_details())
+            return render(request, self.template, {'err_msg': err_msg})
