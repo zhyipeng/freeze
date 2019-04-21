@@ -9,8 +9,12 @@ class LoginForm(serializers.Serializer):
     password = serializers.CharField()
 
     def create(self, validated_data):
-        return User.login(validated_data['password'],
+        user = User.login(validated_data['password'],
                           validated_data['username'])
+        if not user:
+            raise serializers.ValidationError('用户名或密码错误')
+
+        return user
 
 
 class RegisterForm(serializers.Serializer):

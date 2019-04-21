@@ -18,14 +18,14 @@ class LoginView(BasePageView):
     def post(self, request):
         form = LoginForm(data=request.POST)
 
-        if form.is_valid():
+        try:
+            form.is_valid(raise_exception=True)
             user = form.save()
-            if user:
-                request.session['user'] = user.id
-                return redirect(reverse('funds:index'))
-
-        return render(
-            request, self.template, {'err_msg': '用户名或密码错误!'})
+            request.session['user'] = user.id
+            return redirect(reverse('funds:index'))
+        except ValidationError as e:
+            err_msg = handle_validation_error_msg(e.get_full_details())
+            return render(request, self.template, {'err_msg': err_msg})
 
 
 class RegisterView(BasePageView):

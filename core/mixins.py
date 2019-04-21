@@ -8,8 +8,8 @@ from core.exceptions import BusinessException
 class LoginRequiredMixin:
 
     def dispatch(self, request, *args, **kwargs):
-        # if not request.session.get('user'):
-        #     return redirect(reverse('members:login'))
+        if not request.session.get('user'):
+            return redirect(reverse('members:login'))
 
         return super().dispatch(request, *args, **kwargs)
 

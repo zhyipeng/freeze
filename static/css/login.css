@@ -9,3 +9,8 @@
     position: absolute;
     right: 0;
 }
+
+.go-register {
+    text-align: right;
+    padding: 5px 5px;
+}

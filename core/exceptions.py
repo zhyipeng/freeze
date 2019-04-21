@@ -22,9 +22,13 @@ class BusinessException(Exception):
 
 
 def handle_validation_error_msg(detail):
-    for key, msg_list in detail.items():
-        if msg_list[0]['code'] == 'invalid':
-            return msg_list[0]['message']
+    if isinstance(detail, dict):
+        for key, msg_list in detail.items():
+            if msg_list[0]['code'] == 'invalid':
+                return msg_list[0]['message']
 
-        else:
-            return f'{key}: {msg_list[0]["message"]}'
+            else:
+                return f'{key}: {msg_list[0]["message"]}'
+
+    elif isinstance(detail, list):
+        return detail[0]['message']
