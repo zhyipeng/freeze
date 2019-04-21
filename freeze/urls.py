@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('funds.urls', 'funds'), namespace='funds')),
     path('', include(('members.urls', 'members'), namespace='users')),
+    path('', include(('funds.restful.urls', 'funds'), namespace='funds-api'))
 ]

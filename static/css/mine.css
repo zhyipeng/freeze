@@ -5,3 +5,46 @@
 #mine span {
     color: darkorange;
 }
+
+.user-info {
+    height: 20px;
+    text-align: right;
+    padding: 1px 5px;
+    color: #aaaaaa;
+}
+
+.user-info span {
+    color: #555;
+}
+
+.feature-area {
+    margin-top: 20px;
+}
+
+.feature {
+    border-top: #DDDDDD solid 1px;
+    height: 50px;
+    padding: 0 10px;
+}
+
+.last-feature {
+    border-bottom: #DDDDDD solid 1px;
+}
+
+.feature a {
+    font-size: 1.6rem;
+    line-height: 50px;
+    color: #666666;
+    display: block;
+    position: relative;
+}
+
+.feature-name {
+    padding-left: 10px;
+}
+
+.right-arrow {
+    position: absolute;
+    right: 5px;
+    top: 17px;
+}

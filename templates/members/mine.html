@@ -9,3 +9,27 @@
     <link rel="stylesheet" href="{% static 'css/mine.css' %}">
 {% endblock %}
 
+{% block content %}
+    <div class="user-info">
+        <p>欢迎你 <span>{{ user.nick_name }}</span></p>
+    </div>
+
+    <div class="feature-area">
+        <div class="feature">
+            <a href="{% url 'funds:concerned' %}">
+                <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+                <span class="feature-name">我的关注基金</span>
+                <span class="right-arrow glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+
+        <div class="feature last-feature">
+            <a>
+                <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+                <span class="feature-name">我的关注基金</span>
+                <span class="right-arrow glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+.concerned-list {
+    clear: both;
+}
+
+.concerned-fund {
+    height: 50px;
+    border-top: #DDDDDD solid 1px;
+    line-height: 50px;
+    font-size: 1.5rem;
+    padding-left: 10px;
+}
+
+.add-concerned-fund {
+    height: 30px;
+    border-top: #DDDDDD solid 1px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 1.2rem;
+    color: #666666;
+}
+
+#search-btn {
+    float: left;
+    background: white;
+    color: darkorange;
+    border: #DDDDDD solid 1px;
+}
+
+#search-q {
+    float: left;
+    width: 278px;
+}
+
+#search-form {
+    margin-top: 50px;
+}
+
+.concerned-fund p {
+    display: block;
+    position: relative;
+}
+
+.concerned-fund p span {
+    position: absolute;
+    right: 10px;
+    line-height: 50px;
+    font-size: 1.5rem;
+}

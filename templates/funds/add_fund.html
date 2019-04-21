@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-</body>
-</html>
+{% block title %}
+    添加基金
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/concerned.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'funds:add_fund' %}" method="get" class="form-inline" id="search-form">
+        <div class="form-group">
+            <label class="sr-only" for="q"></label>
+            <div class="input-group" id="search-q">
+                {% if q %}
+                    <input type="text" class="form-control" id="q"
+                       placeholder="{{ q }}" name="q">
+                {% else %}
+                    <input type="text" class="form-control" id="q"
+                       placeholder="请输入基金名称或代码搜索" name="q">
+                {% endif %}
+
+            </div>
+            <button type="submit" class="btn btn-primary" id="search-btn">
+                <span class="glyphicon glyphicon-search"
+                      aria-hidden="true"></span>
+            </button>
+        </div>
+    </form>
+
+    <div class="concerned-list">
+        {% for fund in funds %}
+            <div class="concerned-fund" id="{{ fund.id }}">
+                <p>{{ fund.code }} {{ fund.name }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(".concerned-fund").click(function () {
+            $.ajax({
+                "type": "POST",
+                "url": "/funds/api/v1/add_concern_fund/",
+                data: {"fund_id": this.id},
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.error_code == 0) {
+                        alert("添加成功")
+                    }
+                    else {
+                        alert("添加失败, " + data.error_message)
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}

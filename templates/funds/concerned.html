@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+关注
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/concerned.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="concerned-list">
+        {% for fund in funds %}
+            <div class="concerned-fund" id="{{ fund.id }}">
+                <p style="display: block;">
+                    {{ fund.code }} {{ fund.name }}
+                    <span class="glyphicon glyphicon-remove"></span>
+                </p>
+            </div>
+        {% endfor %}
+
+        <div class="add-concerned-fund">
+            <a href="{% url 'funds:add_fund' %}">添加基金 <span class="glyphicon glyphicon-plus"></span></a>
+        </div>
+    </div>
+{% endblock %}
