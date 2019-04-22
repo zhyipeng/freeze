@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+关注
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/concerned.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="concerned-list">
+        {% for fund in funds %}
+            <div class="concerned-fund">
+                <a style="display: block;" href="{% url 'funds:add_data2' fund.id %}">
+                    {{ fund.code }} {{ fund.name }}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

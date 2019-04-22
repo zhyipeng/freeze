@@ -1,0 +1,8 @@
+.add-date-form {
+    padding: 10px;
+}
+
+.add-date-form button {
+    position: absolute;
+    right: 10px;
+}

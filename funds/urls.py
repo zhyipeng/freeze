@@ -9,5 +9,7 @@ urlpatterns = [
          name='concerned'),
     path('mine/add_fund',
          views.AddConcernedFundView.as_view(),
-         name='add_fund')
+         name='add_fund'),
+    path('mine/add_data', views.AddFundDataView.as_view(), name='add_data'),
+    path('mine/<int:pk>/add_data', views.AddFundData2View.as_view(), name='add_data2'),
 ]

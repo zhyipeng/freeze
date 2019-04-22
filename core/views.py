@@ -6,6 +6,7 @@ from members.models import User
 
 class BasePageView(View):
     template = 'funds/index.html'
+    queryset = None
     form = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -16,6 +17,7 @@ class BasePageView(View):
     def get(self, request):
         data = self.render_data()
         data['user'] = request.user
+        data['err_msg'] = request.GET.get('err_msg', '')
         return render(request, self.template, data)
 
     def get_serializer_context(self):
@@ -26,3 +28,16 @@ class BasePageView(View):
 
     def render_data(self):
         return {}
+
+
+class DetailPageView(BasePageView):
+
+    def get_object(self, pk):
+        return self.queryset.filter(id=pk).first()
+
+    def get(self, request, pk):
+        data = self.render_data()
+        data['user'] = request.user
+        data['instance'] = self.get_object(pk)
+        data['err_msg'] = request.GET.get('err_msg', '')
+        return render(request, self.template, data)

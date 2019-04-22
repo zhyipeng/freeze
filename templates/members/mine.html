@@ -16,8 +16,18 @@
 
     <div class="feature-area">
         <div class="feature">
+            <a href="{% url 'funds:add_data' %}">
+                <span class="glyphicon glyphicon-refresh"
+                      aria-hidden="true"></span>
+                <span class="feature-name">添加数据</span>
+                <span class="right-arrow glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+
+        <div class="feature">
             <a href="{% url 'funds:concerned' %}">
-                <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-tasks"
+                      aria-hidden="true"></span>
                 <span class="feature-name">我的关注基金</span>
                 <span class="right-arrow glyphicon glyphicon-chevron-right"></span>
             </a>
@@ -25,7 +35,8 @@
 
         <div class="feature last-feature">
             <a>
-                <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-tasks"
+                      aria-hidden="true"></span>
                 <span class="feature-name">我的关注基金</span>
                 <span class="right-arrow glyphicon glyphicon-chevron-right"></span>
             </a>

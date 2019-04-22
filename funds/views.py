@@ -1,7 +1,10 @@
 from django.db.models import Q
+from django.shortcuts import redirect
 
 from core.mixins import LoginRequiredMixin
-from core.views import BasePageView
+from core.responses import response_or_error
+from core.views import BasePageView, DetailPageView
+from funds.forms import AddFundDataForm
 from funds.models import Fund
 
 
@@ -32,3 +35,25 @@ class ConcernedFundView(LoginRequiredMixin, BasePageView):
             'funds': Fund.objects.filter(
                 id__in=self.request.user.concerned_funds)
         }
+
+
+class AddFundDataView(ConcernedFundView):
+    template = 'funds/add_data.html'
+
+
+class AddFundData2View(LoginRequiredMixin, DetailPageView):
+    template = 'funds/add_data2.html'
+    queryset = Fund.objects.all()
+
+    def post(self, request, pk):
+        data = {
+            'fund_id': pk,
+            'value': request.POST.get('value'),
+            'date': request.POST.get('date')
+        }
+        print(data)
+        form = AddFundDataForm(data=data,
+                               context=self.get_serializer_context())
+
+        err_msg = response_or_error(form)
+        return redirect(f'/mine/{pk}/add_data?err_msg={err_msg}')

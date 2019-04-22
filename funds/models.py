@@ -1,6 +1,7 @@
 from django.db import models
 
 from core.models import BaseModelWithTimeField
+from utils import local_date
 
 
 class Fund(models.Model):
@@ -18,11 +19,12 @@ class Fund(models.Model):
 class FundLog(BaseModelWithTimeField):
 
     fund = models.ForeignKey(Fund, on_delete=models.CASCADE)
-    value = models.FloatField('估值', default=0)
+    value = models.FloatField('净值', default=0)
+    date = models.DateField('日期', default=local_date)
 
     class Meta:
-        verbose_name = '基金估值记录'
-        verbose_name_plural = '基金估值记录'
+        verbose_name = '基金净值记录'
+        verbose_name_plural = '基金净值记录'
 
 
 class InvestmentLog(BaseModelWithTimeField):
@@ -30,6 +32,7 @@ class InvestmentLog(BaseModelWithTimeField):
     fund = models.ForeignKey(Fund, on_delete=models.CASCADE)
     user = models.ForeignKey('members.User', on_delete=models.CASCADE)
     quantity = models.IntegerField('投入/卖出份额', default=0)
+    date = models.DateField('日期', default=local_date)
 
     class Meta:
         verbose_name = '投入卖出记录'

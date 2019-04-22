@@ -33,7 +33,7 @@
     <div class="concerned-list">
         {% for fund in funds %}
             <div class="concerned-fund" id="{{ fund.id }}">
-                <p>{{ fund.code }} {{ fund.name }}</p>
+                <p>{{ fund.code }} {{ fund.name }} <span class="fund-type">{{ fund.type }}</span></p>
             </div>
         {% endfor %}
     </div>

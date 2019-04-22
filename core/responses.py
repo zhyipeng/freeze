@@ -1,8 +1,10 @@
 import six
+from django.shortcuts import render
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response as rf_Response
 from rest_framework.serializers import Serializer
 
-from core.exceptions import ERROR_PHRASES
+from core.exceptions import ERROR_PHRASES, BusinessException
 
 
 class Response(rf_Response):
@@ -63,3 +65,18 @@ class Response(rf_Response):
                 ret['error_data'] = self.data
 
             self.data = ret
+
+
+def response_or_error(form):
+    try:
+        form.is_valid(raise_exception=True)
+        form.save()
+        return ''
+    except ValidationError as e:
+        return e.get_full_details()
+
+    except BusinessException as e:
+        return e.err_msg
+
+    except Exception:
+        return '未知错误'
