@@ -6,7 +6,7 @@ from core.exceptions import handle_validation_error_msg
 from core.responses import Response
 from core.viewsets import BaseViewSet
 from funds.models import Fund
-from funds.restful.v1.forms import AddConcernedFundForm
+from funds.restful.v1.forms import AddConcernedFundForm, RemoveConcernedFundForm
 
 
 class FundViewSet(BaseViewSet):
@@ -16,6 +16,23 @@ class FundViewSet(BaseViewSet):
     def add_concern_fund(self, request):
         form = AddConcernedFundForm(data=request.data,
                                     context=self.get_serializer_context())
+        try:
+            form.is_valid(raise_exception=True)
+            form.save()
+
+            return Response()
+        except ValidationError as e:
+            err_msg = handle_validation_error_msg(e.get_full_details())
+
+        except exceptions.BusinessException as e:
+            err_msg = e.err_msg
+
+        return Response(error_message=err_msg, exception=True)
+
+    @action(methods=['post'], detail=False)
+    def remove_concern_fund(self, request):
+        form = RemoveConcernedFundForm(data=request.data,
+                                       context=self.get_serializer_context())
         try:
             form.is_valid(raise_exception=True)
             form.save()

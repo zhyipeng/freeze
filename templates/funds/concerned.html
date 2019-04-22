@@ -12,10 +12,10 @@
 {% block content %}
     <div class="concerned-list">
         {% for fund in funds %}
-            <div class="concerned-fund" id="{{ fund.id }}">
+            <div class="concerned-fund">
                 <p style="display: block;">
                     {{ fund.code }} {{ fund.name }}
-                    <span class="glyphicon glyphicon-remove"></span>
+                    <span id="{{ fund.id }}" class="glyphicon glyphicon-remove remove-fund"></span>
                 </p>
             </div>
         {% endfor %}
@@ -24,4 +24,28 @@
             <a href="{% url 'funds:add_fund' %}">添加基金 <span class="glyphicon glyphicon-plus"></span></a>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(".remove-fund").click(function () {
+            $.ajax({
+                "type": "POST",
+                "url": "/funds/api/v1/remove_concern_fund/",
+                data: {"fund_id": this.id},
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.error_code == 0) {
+                        alert("移除成功");
+                        location.reload()
+                    }
+                    else {
+                        alert(data.error_message)
+                    }
+                }
+            })
+        })
+    </script>
 {% endblock %}
