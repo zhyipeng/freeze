@@ -15,7 +15,7 @@ import os
 import environ
 
 env = environ.Env(
-DATABASE_URL=(str, 'mysql://root:zhang789@localhost:3306/freeze'),
+    DATABASE_URL=(str, 'mysql://root:zhang789@localhost:3306/freeze'),
 )
 
 
@@ -132,6 +132,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+FUND_IMAGES_DIR = os.path.join(BASE_DIR, 'static/images/funds')
 
 # 日志相关
 # LOGGING = {
