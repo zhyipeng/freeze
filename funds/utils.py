@@ -1,7 +1,9 @@
+from freeze import celery_app
+
 from funds.models import FundLog, InvestmentLog
 from utils.draw_tools import DrawTool
 
-
+@celery_app.task()
 def draw_fund(fund, user):
     value_list, date_list = [], []
     fund_logs = FundLog.objects.filter(
@@ -12,7 +14,7 @@ def draw_fund(fund, user):
 
     quantity_list, invest_date_list = [], []
     invest_logs = InvestmentLog.objects.filter(
-        fund=fund, user=user).order_by('date').values_list('quantity', 'date')
+        fund=fund, user=user).order_by('date').values_list('value', 'date')
     if invest_logs.exists():
         quantity_list, invest_date_list = list(zip(*invest_logs))
 

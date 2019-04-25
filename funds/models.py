@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.db import models
 
 from core.models import BaseModelWithTimeField
@@ -14,6 +17,14 @@ class Fund(models.Model):
     class Meta:
         verbose_name = '基金'
         verbose_name_plural = '基金'
+
+    @property
+    def pic(self):
+        pic_path = os.path.join(settings.FUND_IMAGES_DIR, f'{self.code}.png')
+        if os.path.exists(pic_path):
+            return pic_path
+
+        return
 
 
 class FundLog(BaseModelWithTimeField):

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from funds.models import Fund, FundLog, InvestmentLog
+from funds.utils import draw_fund
 
 
 class AddFundDataForm(serializers.Serializer):
@@ -14,6 +15,8 @@ class AddFundDataForm(serializers.Serializer):
             fund=fund,
             date=validated_data['date'],
             defaults={'value': validated_data['value']})
+
+        draw_fund.delay(fund, self.context['user'])
 
         return instance
 
@@ -35,5 +38,7 @@ class AddInvestLogForm(AddFundDataForm):
             user=self.context['user'],
             **validated_data
         )
+
+        draw_fund.delay(fund, self.context['user'])
 
         return instance

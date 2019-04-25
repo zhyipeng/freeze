@@ -79,4 +79,5 @@ def get_error_message(form):
         return e.err_msg
 
     except Exception:
+        raise
         return '未知错误'

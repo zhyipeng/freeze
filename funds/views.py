@@ -11,6 +11,12 @@ from funds.models import Fund, InvestmentLog
 class FundView(LoginRequiredMixin, BasePageView):
     template = 'funds/index.html'
 
+    def render_data(self):
+        ids = self.request.user.concerned_funds
+        return {
+            'funds': Fund.objects.filter(id__in=ids)
+        }
+
 
 class AddConcernedFundView(LoginRequiredMixin, BasePageView):
     template = 'funds/add_fund.html'

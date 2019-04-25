@@ -16,6 +16,7 @@ import environ
 
 env = environ.Env(
     DATABASE_URL=(str, 'mysql://root:zhang789@localhost:3306/freeze'),
+    CELERY_BROKER_URL=(str, 'redis://@127.0.0.1:6379/13'),
 )
 
 
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     'members',
     'django_extensions',
     'rest_framework',
+    'django_celery_beat',
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
@@ -134,6 +137,14 @@ STATICFILES_DIRS = (
 )
 
 FUND_IMAGES_DIR = os.path.join(BASE_DIR, 'static/images/funds')
+
+
+# Celery
+CELERY_ACCEPT_CONTENT = ('pickle', 'json')
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
 
 # 日志相关
 # LOGGING = {

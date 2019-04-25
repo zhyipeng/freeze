@@ -6,38 +6,27 @@
 {% endblock %}
 
 {% block title %}
-Freeze
+    Freeze
 {% endblock %}
 
 {% block content %}
-
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
-    <h1>啦啦啦</h1>
+    <div class="fund-pics">
+        <ul>
+            {% if funds %}
+                {% for fund in funds %}
+                    <li>
+                        <p>{{ fund.code }} {{ fund.name }}</p>
+                        {% if fund.pic %}
+                            <img src="static/images/funds/{{ fund.code }}.png" alt="">
+                        {% else %}
+                            <img src="{% static 'images/funds/1.png' %}" alt="">
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            {% else %}
+                <p class="no-fund">暂无关注基金 <a href="{% url 'funds:add_fund' %}">去设置 >></a></p>
+            {% endif %}
+        </ul>
+    </div>
 
 {% endblock %}

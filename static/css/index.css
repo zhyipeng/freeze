@@ -5,3 +5,27 @@
 #mine span {
     color: rgba(0,0,0,0.1);
 }
+
+.fund-pics ul, .fund-pics li{
+    list-style: none;
+}
+
+.fund-pics {
+    padding: 15px;
+}
+
+.fund-pics li {
+    margin-bottom: 40px;
+}
+
+.fund-pics p {
+}
+
+.fund-pics img {
+    width: 100%;
+    transform: scale(1.19);
+}
+
+.no-fund a{
+    color: darkorange;
+}
