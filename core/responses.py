@@ -1,10 +1,13 @@
+import logging
+
 import six
-from django.shortcuts import render
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response as rf_Response
 from rest_framework.serializers import Serializer
 
 from core.exceptions import ERROR_PHRASES, BusinessException
+
+logger = logging.getLogger('django')
 
 
 class Response(rf_Response):
@@ -79,5 +82,5 @@ def get_error_message(form):
         return e.err_msg
 
     except Exception:
-        raise
+        logger.exception('~~~~ERROR')
         return '未知错误'

@@ -17,6 +17,8 @@ import environ
 env = environ.Env(
     DATABASE_URL=(str, 'mysql://root:zhang789@localhost:3306/freeze'),
     CELERY_BROKER_URL=(str, 'redis://@127.0.0.1:6379/13'),
+    STATIC_ROOT=(str, 'staticfiles'),
+    LOG_PATH=(str, 'django.log'),
 )
 
 
@@ -131,7 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = env('STATIC_ROOT')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
@@ -147,64 +149,64 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_BROKER_URL = env('CELERY_BROKER_URL')
 
 # 日志相关
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'verbose': {
-#             'format': '%(asctime)s [%(levelname)s] %(module)s.%(funcName)s'
-#                       '(%(filename)s:%(lineno)s) > %(message)s'
-#         },
-#         'simple': {
-#             'format': '%(levelname)s %(message)s'
-#         },
-#     },
-#     'filters': {
-#         'require_debug_false': {
-#             '()': 'django.utils.log.RequireDebugFalse'
-#         },
-#         'require_debug_true': {
-#             '()': 'django.utils.log.RequireDebugTrue',
-#         },
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'DEBUG' if DEBUG else 'INFO',
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'verbose'
-#         },
-#         'mail_admins': {
-#             'level': 'ERROR',
-#             'filters': ['require_debug_false'],
-#             'class': 'django.utils.log.AdminEmailHandler'
-#         },
-#         'file': {
-#             'level': 'INFO',
-#             'class': 'logging.handlers.RotatingFileHandler',
-#             'filename': env('LOG_PATH'),
-#             'maxBytes': 1024 * 1024 * 50,
-#             'backupCount': 10,
-#             'formatter': 'verbose'
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['console'] if DEBUG else ['file'],
-#             'level': 'INFO',
-#             'propagate': False,
-#         },
-#         'django.request': {
-#             'handlers': ['mail_admins'],
-#             'level': 'ERROR',
-#             'propagate': True,
-#         },
-#         'django.security': {
-#             'handlers': ['mail_admins'],
-#             'level': 'ERROR',
-#             'propagate': False,
-#         },
-#         'py.warnings': {
-#             'handlers': ['console'],
-#         },
-#     }
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s [%(levelname)s] %(module)s.%(funcName)s'
+                      '(%(filename)s:%(lineno)s) > %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG' if DEBUG else 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': env('LOG_PATH'),
+            'maxBytes': 1024 * 1024 * 50,
+            'backupCount': 10,
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'] if DEBUG else ['file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.security': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'py.warnings': {
+            'handlers': ['console'],
+        },
+    }
+}
