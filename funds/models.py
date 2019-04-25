@@ -31,8 +31,8 @@ class InvestmentLog(BaseModelWithTimeField):
 
     fund = models.ForeignKey(Fund, on_delete=models.CASCADE)
     user = models.ForeignKey('members.User', on_delete=models.CASCADE)
-    quantity = models.IntegerField('投入/卖出份额', default=0)
     date = models.DateField('日期', default=local_date)
+    value = models.FloatField('投入/卖出金额', default=0)
 
     class Meta:
         verbose_name = '投入卖出记录'

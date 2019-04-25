@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ instance.code }} {{ instance.name }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet"
+          href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/add_data.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="add-date-form" style="margin-top: 0;">
+        <form action="{% url 'funds:invest_log2' instance.id %}" method="post">
+            {% csrf_token %}
+
+            <div class="radio-inline">
+                <label>
+                    <input type="radio" name="option" id="buy"
+                           value="buy" checked>
+                    买入
+                </label>
+            </div>
+
+            <div class="radio-inline">
+                <label>
+                    <input type="radio" name="option" id="sell"
+                           value="sell">
+                    卖出
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="sr-only" for="value">金额</label>
+                <div class="input-group">
+                    <div class="input-group-addon">￥</div>
+                    <input type="text" class="form-control"
+                           id="value" name="value" placeholder="金额">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="date">选择日期</label>
+                <div class="input-group date" id="date-div">
+                    <input type="text" class="form-control" id="date"
+                           name="date">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default">提交</button>
+        </form>
+    </div>
+
+    <ul class="invest-log-list">
+        <h4 style="color: orange;">交易记录</h4>
+        {% if invest_logs %}
+            {% for log in invest_logs %}
+                <li>
+                    <div>
+                        <p>{{ log.date }} {{ log.value }}
+                            <span id="{{ log.id }}"
+                                  class="glyphicon glyphicon-remove remove-log"></span>
+                        </p>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            暂无交易记录
+        {% endif %}
+
+
+    </ul>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/moment-with-locales.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+
+    <script>
+        $(function () {
+            var d = new Date();
+            _date = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+            $('#date').attr('value', _date);
+
+            $('#date-div').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: moment.locale('zh-cn')
+            });
+        });
+
+        $(".remove-log").click(function () {
+            $.ajax({
+                "type": "POST",
+                "url": "/funds/api/v1/invest_log/" + this.id + "/remove/",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.error_code == 0) {
+                        alert("移除成功");
+                        location.reload()
+                    } else {
+                        alert(data.error_message)
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}

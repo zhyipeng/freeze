@@ -33,7 +33,7 @@ class Response(rf_Response):
         self.content_type = content_type
         self.biz = biz
 
-        self.error_code = error_code
+        self.error_code = error_code or '0'
         self.error_message = error_message
 
         if self.exception:
@@ -67,7 +67,7 @@ class Response(rf_Response):
             self.data = ret
 
 
-def response_or_error(form):
+def get_error_message(form):
     try:
         form.is_valid(raise_exception=True)
         form.save()

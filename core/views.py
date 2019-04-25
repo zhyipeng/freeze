@@ -32,11 +32,14 @@ class BasePageView(View):
 
 class DetailPageView(BasePageView):
 
+    def render_data(self, pk):
+        return {}
+
     def get_object(self, pk):
         return self.queryset.filter(id=pk).first()
 
     def get(self, request, pk):
-        data = self.render_data()
+        data = self.render_data(pk)
         data['user'] = request.user
         data['instance'] = self.get_object(pk)
         data['err_msg'] = request.GET.get('err_msg', '')

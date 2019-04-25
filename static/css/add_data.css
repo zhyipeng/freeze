@@ -6,3 +6,29 @@
     position: absolute;
     right: 10px;
 }
+
+.invest-log-list {
+    margin-top: 40px;
+    padding: 15px;
+    list-style: none;
+}
+
+.invest-log-list li {
+    height: 35px;
+    list-style: none;
+    border-bottom: #DDDDDD solid 1px;
+}
+
+.invest-log-list p {
+    display: block;
+    position: relative;
+    line-height: 35px;
+
+}
+
+.invest-log-list p span {
+    position: absolute;
+    right: 10px;
+    line-height: 35px;
+    font-size: 1.5rem;
+}
